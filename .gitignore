@@ -1,0 +1,10 @@
+*.idea
+* venv
+.vs/
+bin/
+obj/
+*.psess
+*.vsp
+*.vspx
+*.slnx\
+*.csproj
