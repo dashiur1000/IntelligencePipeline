@@ -1,5 +1,7 @@
-﻿namespace MyReportProject.;
-
-public class IValidator {
-
+﻿using IntelligencePipeline.Models.Reports;
+using System;
+namespace IntelligencePipeline.Validation;
+interface IValidator
+{
+    ValidationResult Validate(Report report);
 }

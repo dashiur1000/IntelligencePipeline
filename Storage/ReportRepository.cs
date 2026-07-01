@@ -1,5 +1,5 @@
-﻿namespace MyReportProject.;
+﻿//namespace MyReportProject.;
 
-public class ReportRepository {
+//public class ReportRepository {
 
-}
+//}

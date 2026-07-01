@@ -9,8 +9,8 @@ class DroneReport : Report
     public DroneReport(int reportId, DateTime timestamp, double latitude, double longitude, string description, int altitude, int imageQuality)
         : base(reportId, timestamp, latitude, longitude, description)
     {
-        this.Altitude = altitude;
-        this.ImageQuality = imageQuality;
+        Altitude = altitude;
+        ImageQuality = imageQuality;
     }
     public override string GetSourceType() => "Drone";
     public override int CalculateReliabilityScore()

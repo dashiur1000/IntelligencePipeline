@@ -1,5 +1,7 @@
-﻿namespace MyReportProject.;
+﻿//using System;
+//namespace IntelligencePipeline.Models.Reports;
 
-public class SoldierReport {
+//class SoldierReport : Report
+//{
 
-}
+//}

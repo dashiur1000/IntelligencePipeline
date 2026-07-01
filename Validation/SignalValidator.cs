@@ -1,5 +1,5 @@
-﻿namespace MyReportProject.;
+﻿//namespace MyReportProject.;
 
-public class SignalValidator {
+//public class SignalValidator {
 
-}
+//}

@@ -1,5 +1,5 @@
-﻿namespace MyReportProject.;
+﻿//namespace MyReportProject.;
 
-public class PriorityCalculator {
+//public class PriorityCalculator {
 
-}
+//}
