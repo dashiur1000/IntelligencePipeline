@@ -17,15 +17,6 @@ class Program
                 string reportType = Console.ReadLine();
                 if (reportType == "1")
                 {
-                    Console.WriteLine("Enter reportId: ");
-                    string reportIdStr = Console.ReadLine();
-                    if (!int.TryParse(reportIdStr, out int reportId))
-                    {
-                        Console.WriteLine("The character entered is invalid.");
-                        continue;
-                    }
-                    else
-                    {
                         Console.WriteLine("Enter time (yyyy-mm-dd hh:mm:ss): ");
                         string dateTimeStr = Console.ReadLine();
                         if (!DateTime.TryParse(dateTimeStr, out DateTime Timestamp))
@@ -54,8 +45,32 @@ class Program
                                 else
                                 {
                                     Console.WriteLine("Enter Description");
-                                    string Description = Console.ReadLine();
-                                    //Report newReport = new DroneReport(reportId, Timestamp, Latitude, Longitude, Altitude, )
+                                    string description = Console.ReadLine();
+                                    Console.WriteLine("Enter Altitude");
+                                    string altitudeStr = Console.ReadLine();
+                                    if(!int.TryParse(altitudeStr, out int altitude))
+                                    {
+                                        Console.WriteLine("The character entered is invalid.");
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Enter ImageQuality");
+                                        string imageQualityStr = Console.ReadLine();
+                                        if(!int.TryParse(imageQualityStr, out int imageQuality))
+                                        {
+                                            Console.WriteLine("The character entered is invalid.");
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            Report newReport = new DroneReport(Timestamp, Latitude, Longitude, description, altitude, imageQuality);
+                                            Console.WriteLine(newReport.Timestamp);
+                                        }
+                                    }
+                                        
+
+                                    }
                                 }
                             }
                         }
@@ -64,11 +79,9 @@ class Program
                 }
             }
             
-        }
-        Report report1 = new DroneReport(1, DateTime.Parse("2026-06-29 14:30:01"), 31.000, 34.5000, "A spy films Shivata", 1000, 70);
-        args = new string[] { "report1" };
-        //Console.WriteLine(report1.Timestamp);
-    }
+        
+        
+    
     private static void DisplayReport(Report report)
     {
 
