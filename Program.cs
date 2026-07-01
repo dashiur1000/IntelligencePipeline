@@ -1,9 +1,8 @@
 ﻿using IntelligencePipeline.Models.Enums;
 using System;
-namespace IntelligencePipeline;
+namespace IntelligencePipeline.Models.Reports;
 abstract class Report
 {
-    private DateTime minDate = new DateTime(2020, 1, 1);
     private int _reportId;
     private DateTime _timestamp;
     private double _latitude;
@@ -16,72 +15,104 @@ abstract class Report
     private string _rejectionReason;
 
 
-    public int ReportId { get; }
+    public int ReportId
+    {
+        get => _reportId;
+        protected set
+        {
+            _reportId = value;
+        }
+    }
     public DateTime Timestamp
     {
         get => _timestamp;
-        set
+        protected set
         {
-            if (value > DateTime.Now)
-            {
-                Status = ReportStatus.Rejected;
-                RejectionReason = "Invalid Timestamp: cannot be in the future";
-            }
-            else if (value < minDate)
-            {
-                Status = ReportStatus.Rejected;
-                RejectionReason = $"Invalid Timestamp: must be between {minDate:yyyy-MM-dd} and {DateTime.Now:yyyy-MM-dd}";
-            }
-            else
-                _timestamp = value;
+            _timestamp = value;
         }
     }
     public double Latitude
     {
         get => _latitude;
-        set
+        protected set
         {
-            if(_latitude < 29.5000 || _latitude > 33.5000)
-            {
-                Status = ReportStatus.Rejected;
-                RejectionReason = $"Invalid latitude: must be between 29.5000 and 33.5000";
-            }
-            else
-                _latitude = value;
+            _latitude = value;
         }
     }
     public double Longitude
     {
         get => _longitude;
-        set
+        protected set
         {
-            if(_longitude < 34.0000 || _longitude > 36.0000)
-            {
-                Status = ReportStatus.Rejected;
-                RejectionReason = $"Invalid longitude: must be between 34.0000 and 36.0000";
-            }
-            else
-                _longitude = value;
+            _longitude = value;
         }
     }
     public string Description
     {
         get => _description;
-        set
+        protected set
         {
-            if(value.Length < 10 || value.Length > 100)
-            {
-                Status = ReportStatus.Rejected;
-                RejectionReason = $"Invalid description: must be between 10 and 500 characters";
-            }
-            else
-                _description = value;
+            _description = value;
         }
     }
-    public  ReportStatus Status { get; set; }
-    public Priority Priority { get; set; }
-    public Classification Classification { get; set; }
-    public int ReliabilityScore { get; set; }
-    public string RejectionReason { get; set; }
+    public ReportStatus Status
+    {
+        get => _status;
+        set
+        {
+            _status = value;
+        }
+    }
+    public Priority Priority
+    {
+        get => _priority;
+        set
+        {
+            _priority = value;
+        }
+    }
+    public Classification Classification
+    {
+        get => _classification;
+        set
+        {
+            _classification = value;
+        }
+    }
+    public int ReliabilityScore
+    {
+        get => _reliabilityScore;
+        set
+        {
+            _reliabilityScore = value;
+        }
+    }
+    public string? RejectionReason
+    {
+        get => _rejectionReason;
+        set
+        {
+            _rejectionReason = value;
+        }
+    }
+    protected Report(int reportId, DateTime timestamp, double latitude, double longitude, string description)
+    {
+        ReportId = reportId;
+        Timestamp = timestamp;
+        Latitude = latitude;
+        Longitude = longitude;
+        Description = description;
+        Status = ReportStatus.New;
+    }
+    public abstract string GetSourceType();
+    public abstract int CalculateReliabilityScore();
+    public virtual string GetSummary()
+    {
+        return $"Report {ReportId}: {Description} (Priority: {Priority})";
+    }
+    public override string ToString()
+    {
+        return $"ReportId: {ReportId}, Timestamp: {Timestamp}, Status: {Status}, Classification: {Classification}";
+    }
 
 }
