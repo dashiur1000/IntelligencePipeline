@@ -5,20 +5,20 @@ namespace IntelligencePipeline.Storage;
 
 class ReportRepository
 {
-    private List<Report> _reports;
-    public ReportRepository()
+    private List<Report> _reports;///Create a list of reports
+    public ReportRepository()///Initialize a list
     {
         _reports = new List<Report>();
     }
-    public void Add(Report report)
+    public void Add(Report report)///Add to a list
     {
         _reports.Add(report);
     }
-    public List<Report> GetAll()
+    public List<Report> GetAll()///Return the entire list
     {
         return _reports;
     }
-    public List<Report> GetByStatus(ReportStatus status)
+    public List<Report> GetByStatus(ReportStatus status)///Return by a specific status
     {
         List<Report> result = new List<Report>();
         for (int i = 0; i < _reports.Count; i++)
@@ -28,7 +28,7 @@ class ReportRepository
         }
         return result;
     }
-    public List<Report> GetByPriority(Priority priority)
+    public List<Report> GetByPriority(Priority priority)///Return by a specific priority
     {
         List<Report> result = new List<Report>();
         for (int i = 0; i < _reports.Count; i++)
@@ -38,7 +38,7 @@ class ReportRepository
         }
         return result;
     }
-    public List<Report> Search(string keyword)
+    public List<Report> Search(string keyword)///Return a report containing a specific word
     {
         List<Report> result = new List<Report>();
         for (int i = 0; i < _reports.Count; i++)
@@ -48,7 +48,7 @@ class ReportRepository
         }
         return result;
     }
-    public Report GetById(int reportId)
+    public Report GetById(int reportId)///Return by a specific ID
     {
         for (int i = 0; i < _reports.Count; i++)
         {
@@ -57,7 +57,7 @@ class ReportRepository
         }
         return null;
     }
-    public void UpdateStatus(int reportId, ReportStatus newStatus)
+    public void UpdateStatus(int reportId, ReportStatus newStatus)///Update status by ID
     {
         for (int i = 0; i < _reports.Count; i++)
         {
@@ -65,11 +65,11 @@ class ReportRepository
                 _reports[i].Status = newStatus;
         }
     }
-    public int GetTotalCount()
+    public int GetTotalCount()///Return the number of reports
     {
         return _reports.Count;
     }
-    public int GetCountByStatus(ReportStatus status)
+    public int GetCountByStatus(ReportStatus status)///Return reports by a specific status
     {
         int counter = 0;
         for(int i = 0; i < _reports.Count;i++)
