@@ -4,7 +4,7 @@ namespace IntelligencePipeline.Validation;
 
 class RadarValidator : BaseValidator
 {
-    protected override ValidationResult ValidateSpecificFields(Report report)
+    protected override ValidationResult ValidateSpecificFields(Report report)///Specific Fields Check Function.
     {
         var radarReport = report as RadarReport;
         if (typeof(RadarReport) != report.GetType())

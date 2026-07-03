@@ -5,19 +5,19 @@ using System;
 namespace IntelligencePipeline.Validation;
 abstract class BaseValidator : IValidator
 {
-    private DateTime minDate = new DateTime(2020, 1, 1);
-    public ValidationResult Validate(Report report)
+    private DateTime minDate = new DateTime(2020, 1, 1);///Current time variable
+    public ValidationResult Validate(Report report)///Runs the "" function and returns an error or runs the specific field check function.
     {
-        var commonResult = ValidateCommonFields(report);
-        if(!commonResult.IsValid)
+        var commonResult = ValidateCommonFields(report);///Calls the "ValidateCommonFields" function
+        if (!commonResult.IsValid)///It is not "" and therefore immediately returns the error message
         {
             return commonResult;
         }
-        return ValidateSpecificFields(report);
+        return ValidateSpecificFields(report);///It passed all the tests and therefore moves on to the tests of the specific fields.
     }
-    protected ValidationResult ValidateCommonFields(Report report)
+    protected ValidationResult ValidateCommonFields(Report report)///Checks the validity of the base fields in the message and inserts them into "ValidationResult".
     {
-        if(report.Timestamp >  DateTime.Now)
+        if (report.Timestamp >  DateTime.Now)
         {
             return ValidationResult.Failure("Invalid Timestamp: cannot be in the future.");
         }
@@ -41,11 +41,7 @@ abstract class BaseValidator : IValidator
         {
             return ValidationResult.Failure("Invalid description: must be between 10 and 500 characters");
         }
-        //if (report.GetType() != typeof(DroneReport) && report.GetType() != typeof(SoldierReport) && report.GetType() != typeof(RadarReport) && report.GetType() != typeof(SignalReport))
-        //{
-        //    return ValidationResult.Failure("Invalid report type. Must be: (DroneReport or SoldierReport or RadarReport or SignalReport)");
-        //}
-            return ValidationResult.Success();
+        return ValidationResult.Success();
     }
-    protected abstract ValidationResult ValidateSpecificFields(Report report);
+    protected abstract ValidationResult ValidateSpecificFields(Report report);///Requirement to build a function to check specific fields in the inheriting class.
 }

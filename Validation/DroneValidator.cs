@@ -3,7 +3,7 @@ using System;
 namespace IntelligencePipeline.Validation;
 class DroneValidator : BaseValidator
 {
-    protected override ValidationResult ValidateSpecificFields(Report report)
+    protected override ValidationResult ValidateSpecificFields(Report report)///Specific Fields Check Function.
     {
         var dronereport = report as DroneReport;
         if (typeof(DroneReport) != report.GetType())

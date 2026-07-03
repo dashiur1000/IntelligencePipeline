@@ -1,4 +1,5 @@
 ﻿using IntelligencePipeline.Models.Reports;
+using IntelligencePipeline.Models.Enums;
 using IntelligencePipeline.Storage;
 using IntelligencePipeline.Validation;
 using System;
@@ -16,6 +17,11 @@ class ReportPipeline
     }
     public void ProcessReport(Report report)
     {
+        report.Status = ReportStatus.Validating;
+        IValidator validator = GetValidator(report);
+        
+
+        report.Status = ReportStatus.Validated;
 
     }
     public ReportRepository GetValidatedReports()
@@ -34,13 +40,11 @@ class ReportPipeline
     {
         if (report is DroneReport)
             return new DroneValidator();
-        return new DroneValidator();
-        //if (report is SoldierReport)
-        //    return new SoldierValidator;
-        //if (report is RadarReport)
-        //    return new RadarValidator;
-        //if(report is SignalReport)
-        //    return new SignalValidator;
+        if (report is SoldierReport)
+            return new SoldierValidator();
+        if (report is RadarReport)
+            return new RadarValidator();
+        return new SignalValidator();
     }
     private void ValidateReport(Report report)
     {
