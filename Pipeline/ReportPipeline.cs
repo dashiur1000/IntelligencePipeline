@@ -112,4 +112,28 @@ class ReportPipeline
     {
         return _rejectedReports.GetTotalCount();
     }
+    public List<Report> Search(string keyword)
+    {
+        return _validatedReports.Search(keyword);
+    }
+    public List<Report> GetByStatus(ReportStatus status)
+    {
+        return _validatedReports.GetByStatus(status);
+    }
+    public List<Report> GetByClassification(Classification classification)
+    {
+        return _validatedReports.GetByClassification(classification);
+    }
+    public List<Report> GetByPriority(Priority priority)
+    {
+        return _validatedReports.GetByPriority(priority);
+    }
+    public List<Report> GetBySourceType(string type)
+    {
+        return _validatedReports.GetBySourceType(type);
+    }
+    public List<Report> GetByDate(DateTime first, DateTime second)
+    {
+        return _validatedReports.GetByDate(first, second);
+    }
 }

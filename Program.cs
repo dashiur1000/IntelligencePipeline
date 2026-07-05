@@ -14,7 +14,12 @@ class Program
         Console.WriteLine("Welcome to the report programmer!");
         while(true)
         {
-            Console.Write("To insert a report enter 1:\nTo displaying proper reports enter 2:");
+            Console.Write("============\nTo insert a report enter 1" +
+                "\nTo displaying proper reports enter 2" +
+                "\nSearch for a specific word in reports enter 3" +
+                "\nSort by Status, Classification, Priority, SourceType, Date Range enter 4"+
+                "\n============" +
+                "\nenter: ");
             string generalChoice = Console.ReadLine();
             if (generalChoice == "1")
             {
@@ -90,10 +95,98 @@ class Program
             {
                 if (Pipeline.GetValidatedCount() == 0)
                 {
-                    Console.WriteLine("No reports in status");
+                    Console.WriteLine("No reports in Validated status");
                     continue;
                 }
                 Pipeline.GetValidatedReports();
+            }
+            if (generalChoice == "3")
+            {
+                Console.Write("What do you want to search for: ");
+                string word = Console.ReadLine();
+                var result = Pipeline.Search(word);
+                if (result.Count == 0)
+                {
+                    Console.WriteLine("Not found");
+                }
+                foreach (var report in result)
+                {
+                    Console.WriteLine(report.ToString());
+                }
+            }
+            if(generalChoice == "4")
+            {
+                Console.Write("Sort by Status (1), Classification(2), Priority(3), SourceType(4), Date Range(5): ");
+                string NumSortBy = Console.ReadLine();
+                if(NumSortBy == "1")
+                {
+                    SortBy<ReportStatus>(
+                        status => Pipeline.GetByStatus(status),
+                        "What status do you want to search for (New, Validating, Validated, Rejected, InProgress, Completed): ",
+                        Enum.TryParse<ReportStatus>
+                    );
+                }
+                if(NumSortBy == "2")
+                {
+                    SortBy<Classification>(
+                        classification => Pipeline.GetByClassification(classification),
+                        "What classification do you want to search for (Unclassified, Restricted, Secret, TopSecret): ",
+                        Enum.TryParse<Classification>
+                    );
+                }
+                if(NumSortBy == "3")
+                {
+                    SortBy<Priority>(
+                        priority => Pipeline.GetByPriority(priority),
+                        "What priority do you want to search for (Low, Medium, High, Critical): ",
+                        Enum.TryParse<Priority>
+                    );
+                }
+                if(NumSortBy == "4")
+                {
+                    Console.Write("Enter Source Type: ");
+                    string type = Console.ReadLine();
+                    var results = Pipeline.GetBySourceType(type);
+                    if(results.Count == 0)
+                    {
+                        Console.WriteLine("No reports found.");
+                        continue;
+                    }
+                    foreach(var result in results)
+                    {
+                        Console.WriteLine(result.ToString());
+                    }
+                }
+                if(NumSortBy == "5")
+                {
+                    Console.Write("Enter first date: ");
+                    string firsDateStr = Console.ReadLine();
+                    Console.Write("Enter second date: ");
+                    string secondDateStr = Console.ReadLine();
+                    if(!DateTime.TryParse(firsDateStr, out DateTime firsDate))
+                    {
+                        Console.WriteLine("Invalid input. Please try again.");
+                        continue;
+                    }
+                    if (!DateTime.TryParse(secondDateStr, out DateTime secondDate))
+                    {
+                        Console.WriteLine("Invalid input. Please try again.");
+                        continue;
+                    }
+                    var results = Pipeline.GetByDate(firsDate, secondDate);
+                    if (results.Count == 0)
+                    {
+                        Console.WriteLine("No reports found.");
+                        continue;
+                    }
+                    foreach (var result in results)
+                    {
+                        Console.WriteLine(result.ToString());
+                    }
+
+                }
+
+
             }
             if(generalChoice == "0")
             {
@@ -121,6 +214,37 @@ class Program
             string input = Console.ReadLine();
             if(parser(input, out T result)) return result;
             Console.WriteLine("Invalid input. Please try again.");
+        }
+    }
+    public static void SortBy<T>(Func<T, List<Report>> processFunc, string prompt, TryParseDelegate<T> parser)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string input = Console.ReadLine();
+            if (!parser(input, out T resultWord))
+            {
+                if (input == "0") break;
+                Console.WriteLine("Invalid input. Please try again.");
+                continue;
+            }
+            else
+            {
+                var result = processFunc(resultWord);
+                if (result.Count == 0)
+                {
+                    Console.WriteLine($"No report found.");
+                }
+                else
+                {
+                    foreach (var report in result)
+                    {
+                        Console.WriteLine(report.ToString());
+                    }
+                    break;
+                }
+                
+            }
         }
     }
 }

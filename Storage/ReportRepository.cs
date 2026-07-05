@@ -38,13 +38,26 @@ class ReportRepository
         }
         return result;
     }
-    public List<Report> Search(string keyword)///Return a report containing a specific word
+    public List<Report> GetByClassification(Classification classification)///Return by a specific priority
     {
         List<Report> result = new List<Report>();
         for (int i = 0; i < _reports.Count; i++)
         {
-            if (_reports[i].Description.ToLower().Contains(keyword.ToLower()))
+            if (_reports[i].Classification == classification)
                 result.Add(_reports[i]);
+        }
+        return result;
+    }
+    public List<Report> Search(string keyword)///Return a report containing a specific word
+    {
+        List<Report> result = new List<Report>();
+        
+            foreach(var report in _reports)
+            {
+                if(report.Description.ToLower().Contains(keyword.ToLower()))
+                {
+                    result.Add(report);
+                }
         }
         return result;
     }
@@ -78,6 +91,32 @@ class ReportRepository
                 counter++;
         }
         return counter;
+    }
+    public List<Report> GetBySourceType(string type)
+    {
+        List<Report> result = new List<Report>();
+        string searchType = type.ToLower();
+
+        foreach (var report in _reports)
+        {
+            if (report.GetType().Name.ToLower().Contains(searchType))
+            {
+                result.Add(report);
+            }
+        }
+        return result;
+    }
+    public List<Report> GetByDate(DateTime first, DateTime second)
+    {
+        List<Report> result = new List<Report>();
+        foreach (var report in _reports)
+        {
+            if (report.Timestamp > first && report.Timestamp < second)
+            {
+                result.Add(report);
+            }
+        }
+        return result;
     }
 
 }
