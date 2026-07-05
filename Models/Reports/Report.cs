@@ -19,7 +19,7 @@ abstract class Report
     public int ReportId
     {
         get => _reportId;
-        protected set
+        set
         {
             _reportId = value;
         }

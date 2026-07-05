@@ -4,6 +4,12 @@ namespace IntelligencePipeline.Models.Reports;
 
 class RadarReport : Report
 {
+    int LowDistance = 500;
+    int HighDistance = 30000;
+    int VeryHighDistance = 70000;
+    int LowSpeed = 10;
+    int HighSpeed = 1500;
+    int StandardSpeed = 900;
     public int Speed { get; protected set; }
     public int Direction { get; protected set; }
     public int Distance { get; protected set; }
@@ -18,11 +24,14 @@ class RadarReport : Report
     public override int CalculateReliabilityScore()
     {
         int ReliabilityScore = 6;
-        if(Distance >= 500 && Distance <= 30000) ReliabilityScore += 2;
-        if (Speed >= 10 && Speed <= 900) ReliabilityScore += 1;
-        if(Distance > 70000) ReliabilityScore -= 2;
-        if (Speed > 1500) ReliabilityScore -= 2;
+        if(Distance >= LowDistance && Distance <= HighDistance) ReliabilityScore += 2;
+        if (Speed >= LowSpeed && Speed <= StandardSpeed) ReliabilityScore += 1;
+        if(Distance > VeryHighDistance) ReliabilityScore -= 2;
+        if (Speed > HighSpeed) ReliabilityScore -= 2;
         return ReliabilityScore;
     }
-
+    public override string ToString()
+    {
+        return $"id: {ReportId}, time: {Timestamp}, latitude: {Latitude}, longitude: {Longitude}, description: {Description}, speed: {Speed}, direction: {Direction}, distance: {Distance}, status: {Status}, classification: {Classification}, priority: {Priority}";
+    }
 }

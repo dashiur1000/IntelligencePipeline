@@ -3,6 +3,11 @@ namespace IntelligencePipeline.Models.Reports;
 
 class DroneReport : Report
 {
+    int HighQuality = 80;
+    int LowQuality = 50;
+    int HighAltitude = 7000;
+    int StandardAltitude = 3000;
+    int LowAltitude = 500;
     public int Altitude { get; protected set; }
     public int ImageQuality { get; protected set; }
 
@@ -16,11 +21,14 @@ class DroneReport : Report
     public override int CalculateReliabilityScore()
     {
         int ReliabilityScore = 5;
-        if (ImageQuality >= 80) ReliabilityScore += 3;
-        if (ImageQuality >= 50 && ImageQuality < 80) ReliabilityScore += 2;
-        if (Altitude >= 500 && Altitude <= 3000) ReliabilityScore += 2;
-        if(Altitude > 7000) ReliabilityScore -= 2;
+        if (ImageQuality >= HighQuality) ReliabilityScore += 3;
+        if (ImageQuality >= LowQuality && ImageQuality < HighQuality) ReliabilityScore += 2;
+        if (Altitude >= LowAltitude && Altitude <= StandardAltitude) ReliabilityScore += 2;
+        if(Altitude > HighAltitude) ReliabilityScore -= 2;
         return ReliabilityScore;
     }
-
+    public override string ToString()
+    {
+        return $"id: {ReportId}, time: {Timestamp}, latitude: {Latitude}, longitude: {Longitude}, description: {Description}, altitude: {Altitude}, imageQuality: {ImageQuality}, status: {Status}, classification: {Classification}, priority: {Priority}";
+    }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IntelligencePipeline.Models.Enums;
+using System;
+using System.Reflection.Metadata;
 namespace IntelligencePipeline.Models.Reports;
 
 class SoldierReport : Report
@@ -25,5 +27,9 @@ class SoldierReport : Report
             || Description.ToLower().Contains("movement")
             || Description.ToLower().Contains("explosion")) ReliabilityScore += 1;
         return ReliabilityScore;
+    }
+    public override string ToString()
+    {
+        return $"id: {ReportId}, time: {Timestamp}, latitude: {Latitude}, longitude: {Longitude}, description: {Description}, soldier Name: {SoldierName}, soldier ID: {SoldierID}, unit: {Unit}, confidence level: {ConfidenceLevel}, status: {Status}, classification: {Classification}, priority: {Priority}";
     }
 }
